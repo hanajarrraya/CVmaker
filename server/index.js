@@ -13,13 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 
-app.get('/api/cv', function (req, res) {
-  User.find({_id:req.body},(error, data) => {
+app.post('/api/cv/login', function (req, res) {
+  console.log("data from req:",req.body);
+  User.find(req.body,(error, data) => {
     if (error) {
       throw error
     }
     else {
-      // console.log("data from db:", data);
+      console.log("data from db:", data);
       res.send(data)
     }
   })

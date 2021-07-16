@@ -16,18 +16,14 @@ class Login extends React.Component {
         this.setState({ password: e.target.value })
     }
     getUser() {
-         axios.get('/api/cv', { username: this.state.username }).then((error,data) => {
-             if (error) throw error
-             else{
-                console.log('data in client', data.password)
-                //redirect to create
-                if(data.password===this.state.password){
-   
-                   this.props.changeView('create')
+        axios.post('/api/cv/login',{ username: this.state.username, password: this.state.password }).then(({data}) => {
+
+            console.log('data in client', data)
+                if(data.length===1){
+                    this.props.changeView('create')
                 }
-             }
             
-            
+
 
         })
     }
@@ -35,23 +31,23 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <form >
+                <div >
                     <div>
                         <label>Username:</label>
-                        <input id="username" type="text" name="username" onChange={this.handleChangeUserName.bind(this)}/>
+                        <input id="username" type="text" name="username" onChange={this.handleChangeUserName.bind(this)} />
                     </div>
                     <div>
                         <label>Password:</label>
                         <input id="password" type="password" name="password" onChange={this.handleChangePassword.bind(this)} />
                     </div>
                     <div>
-                        <input type="submit" value="Login" onClick={()=>this.getUser()}/>
+                        <button   onClick={() => this.getUser()} >Login</button>
                     </div>
-                </form>
+                </div>
                 <p>
-                    <a onClick={()=>this.props.changeView('signup')} >Create an Account </a>
+                    <a onClick={() => this.props.changeView('signup')} >Create an Account </a>
 
-                    </p>
+                </p>
             </div>)
     }
 

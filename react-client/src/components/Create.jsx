@@ -97,11 +97,11 @@ doc.save('sample-document.pdf');
 
         return (<div className="create">
             <div className="create-editor">
-                <h2>TYPE</h2>
+                <h2>Write</h2>
                 <form>
 
                     <input type="file" accept="image/*" onChange={this.preview_image.bind(this)} />
-
+                    <label>Job title:</label>
                     <input className="create-input" type="text" placeholder="Job title" onChange={this.handleChangeTitle.bind(this)}></input>
                     <input className="create-input" type="text" placeholder="Name" onChange={this.handleChangeName.bind(this)}></input>
                     <input className="create-input" type="text" placeholder="Email" onChange={this.handleChangeEmail.bind(this)}></input>
