@@ -11,17 +11,18 @@ class Signup extends React.Component {
         }
 
     }
-    handleChangeUserName() {
+    handleChangeUserName(e) {
         this.setState({ username: e.target.value })
     }
-    handleChangePassword() {
+    handleChangePassword(e) {
         this.setState({ password: e.target.value })
     }
     addUser() {
-        // axios.post('/api/cv', { username: this.state.username, password: this.state.password }).then((data) => {
-        //     console.log('data in client', data)
+        axios.post('/api/cv', { username: this.state.username, password: this.state.password }).then((data) => {
+            console.log('data in client', data)
+            this.props.changeView('create');
 
-        // })
+        })
     }
 
 
@@ -29,7 +30,7 @@ class Signup extends React.Component {
 
         return (
             <div>
-                <form action="/signup" method="post">
+                <form >
                     <div>
                         <label for="username">Username:</label>
                         <input id="username" type="text" name="username" onChange={this.handleChangeUserName.bind(this)} />
@@ -43,7 +44,8 @@ class Signup extends React.Component {
                     </div>
                 </form>
                 <p>
-                    <a href="/login">Login to your account &rarr;</a>
+                    <a onClick={()=>this.props.changeView('login')
+                    }>Login to your account </a>
                 </p>
 
             </div>

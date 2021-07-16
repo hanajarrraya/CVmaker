@@ -15,17 +15,17 @@ class Create extends React.Component {
             skills: "",
             languages: "",
             interests: "",
-            data:[]
+            
 
         }
 
     }
 componentDidMount(){
-    // axios.get('/api/cv', {  }).then((data) => {
-    //     console.log('data in client', data)
-    //     this.setState({data:data})
+    axios.get('/api/cv', {  }).then((data) => {
+        console.log('data in client', data)
+        this.setState({data:data})
 
-    // })
+    })
 }
     handleChangeTitle(e) {
         this.setState({ jobtitle: e.target.value })

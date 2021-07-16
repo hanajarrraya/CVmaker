@@ -39,39 +39,28 @@ class App extends React.Component {
     super();
     this.state = {
       view: 'login',
-      items: [],
-      post: {}
+      
     }
 
     this.changeView = this.changeView.bind(this);
   }
 
-  changeView(option, post) {
+  changeView(option) {
     this.setState({
       view: option,
-      post: post
+      
     });
   }
-  // componentDidMount(){
-  // //get items of feed from db
-  // axios.get('/api/blogs').then(({data})=>{
-  //   //  console.log('data in client',data)
-  //   this.setState({
-  //     items:data
-  //   })
-  // }
-
-  // )
-
-
-  // }
+  
   renderView() {
     const { view } = this.state;
 
     if (view === 'logout' || view === 'login') {
-      return <Login />
+      return <Login changeView={this.changeView} />
     } else if (view === 'create') {
       return <Create />
+    }else if (view === 'signup') {
+      return <Signup changeView={this.changeView}/>
     }
 
   }

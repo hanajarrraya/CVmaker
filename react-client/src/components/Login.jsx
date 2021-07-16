@@ -9,24 +9,33 @@ class Login extends React.Component {
         }
 
     }
-    handleChangeUserName() {
+    handleChangeUserName(e) {
         this.setState({ username: e.target.value })
     }
-    handleChangePassword() {
+    handleChangePassword(e) {
         this.setState({ password: e.target.value })
     }
     getUser() {
-        // axios.get('/api/cv', { username: this.state.username, password: this.state.password }).then((data) => {
-        //     console.log('data in client', data)
-        //     //redirect to create
+         axios.get('/api/cv', { username: this.state.username }).then((error,data) => {
+             if (error) throw error
+             else{
+                console.log('data in client', data.password)
+                //redirect to create
+                if(data.password===this.state.password){
+   
+                   this.props.changeView('create')
+                }
+             }
+            
+            
 
-        // })
+        })
     }
 
     render() {
         return (
             <div>
-                <form action="/login" method="post">
+                <form >
                     <div>
                         <label>Username:</label>
                         <input id="username" type="text" name="username" onChange={this.handleChangeUserName.bind(this)}/>
@@ -40,7 +49,7 @@ class Login extends React.Component {
                     </div>
                 </form>
                 <p>
-                    <a href="/signup">Create an Account &rarr;</a>
+                    <a onClick={()=>this.props.changeView('signup')} >Create an Account </a>
 
                     </p>
             </div>)

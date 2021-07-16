@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const Users = require('../database-mongodb/User.js');
+const User = require('../database-mongodb/User.js');
 
 const app = express();
 const PORT = 3000;
@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 
 app.get('/api/cv', function (req, res) {
-  Users.find({_id:req.body},(error, data) => {
+  User.find({_id:req.body},(error, data) => {
     if (error) {
       throw error
     }
@@ -27,7 +27,7 @@ app.get('/api/cv', function (req, res) {
 
 app.post('/api/cv', function (req, res) {
   console.log("data from req:", req.body);
-  Users.create(req.body,(error) => {
+  User.create(req.body,(error) => {
     if (error) {
       throw error
     }
@@ -36,7 +36,7 @@ app.post('/api/cv', function (req, res) {
 });
 app.put('/api/cv/:userId', function (req, res) {
   console.log("req in server",req.body);
-  Users.updateOne({_id:req.params.userId},req.body,(error, data) => {
+  User.updateOne({_id:req.params.userId},req.body,(error, data) => {
     if (error) {
       throw error
     }
