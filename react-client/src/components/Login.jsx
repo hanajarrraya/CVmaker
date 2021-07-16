@@ -18,8 +18,10 @@ class Login extends React.Component {
     getUser() {
         axios.post('/api/cv/login',{ username: this.state.username, password: this.state.password }).then(({data}) => {
 
-            console.log('data in client', data)
+            // console.log('data in client', data)
                 if(data.length===1){
+                    console.log("id in login=",data[0]._id)
+                    localStorage.setItem('_id', JSON.stringify(data[0]._id));
                     this.props.changeView('create')
                 }
             

@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-
+//login request
 app.post('/api/cv/login', function (req, res) {
   console.log("data from req:",req.body);
   User.find(req.body,(error, data) => {
@@ -25,6 +25,7 @@ app.post('/api/cv/login', function (req, res) {
     }
   })
 });
+///signup request
 
 app.post('/api/cv', function (req, res) {
   console.log("data from req:", req.body);
@@ -35,9 +36,23 @@ app.post('/api/cv', function (req, res) {
     
   })
 });
-app.put('/api/cv/:userId', function (req, res) {
-  console.log("req in server",req.body);
-  User.updateOne({_id:req.params.userId},req.body,(error, data) => {
+
+app.post('/api/cv/create', function (req, res) {
+  // console.log("data from req:",req.body);
+  User.find(req.body,(error, data) => {
+    if (error) {
+      throw error
+    }
+    else {
+      // console.log("data from db:", data);
+      res.send(data)
+    }
+  })
+});
+app.put('/api/cv/save/:_id', function (req, res) {
+  console.log("req in server in save",req.body);
+  console.log('id from storage:',req.params);
+  User.updateOne({_id:req.params},req.body,(error, data) => {
     if (error) {
       throw error
     }
