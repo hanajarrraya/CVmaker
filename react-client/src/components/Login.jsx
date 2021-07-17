@@ -16,16 +16,15 @@ class Login extends React.Component {
         this.setState({ password: e.target.value })
     }
     getUser() {
-        axios.post('/api/cv/login',{ username: this.state.username, password: this.state.password }).then(({data}) => {
+        axios.post('/api/cv/login', { username: this.state.username, password: this.state.password }).then(({ data }) => {
 
-            // console.log('data in client', data)
-                if(data.length===1){
-                    console.log("id in login=",data[0]._id)
-                    localStorage.setItem('_id', JSON.stringify(data[0]._id));
-                    this.props.changeId(data[0]._id)
-                    this.props.changeView('create')
-                }
-            
+           
+            if (data.length === 1) {
+
+                this.props.changeId(data[0]._id)
+                this.props.changeView('create')
+            }
+
 
 
         })
@@ -44,7 +43,7 @@ class Login extends React.Component {
                         <input id="password" type="password" name="password" onChange={this.handleChangePassword.bind(this)} />
                     </div>
                     <div>
-                        <button   onClick={() => this.getUser()} >Login</button>
+                        <button className="create-login-button" onClick={() => this.getUser()} >Login</button>
                     </div>
                 </div>
                 <p>

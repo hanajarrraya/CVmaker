@@ -19,8 +19,7 @@ class Signup extends React.Component {
     }
     addUser() {
         axios.post('/api/cv', { username: this.state.username, password: this.state.password }).then((data) => {
-            console.log('data in client', data)
-            localStorage.setItem('_id', JSON.stringify(data._id));
+            
             this.props.changeId(data[0]._id)
             this.props.changeView('create');
 

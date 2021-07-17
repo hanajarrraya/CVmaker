@@ -36,7 +36,7 @@ app.post('/api/cv', function (req, res) {
     
   })
 });
-
+//load data of user while trying to fill the cv from previous edit
 app.post('/api/cv/create', function (req, res) {
   // console.log("data from req:",req.body);
   User.find(req.body,(error, data) => {
@@ -49,15 +49,16 @@ app.post('/api/cv/create', function (req, res) {
     }
   })
 });
+//save the changement of cv in db
 app.put('/api/cv/save/:_id', function (req, res) {
-  console.log("req in server in save",req.body);
-  console.log('id from storage:',req.params);
+   console.log("req in server in save",req.body);
+  // console.log('id from storage:',req.params);
   User.updateOne({_id:req.params},req.body,(error, data) => {
     if (error) {
       throw error
     }
     else {
-      // console.log("data from db:", data);
+       console.log("data from db:", data);
       res.send(data)
     }
   })

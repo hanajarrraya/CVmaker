@@ -13,14 +13,7 @@ h2 {
 }
 
 
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 3px;
-  font-family: 'PT Serif', sans-serif;
-  color: #ECF0F1;
-  background-color: #E74C3C;
-}
+
 
 .create h2 {
   /* border-bottom: 1px solid #777777; */
@@ -101,17 +94,28 @@ button {
   resize: none;
    background-color: lightgray;
 }
-
+.create-login-button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  font-family: 'PT Serif', sans-serif;
+  color: #ECF0F1;
+  background-color: #16a11d;
+}
 .create-submit-button {
   margin-top: 15px;
   font-size: .9em;
   height: 30px;
   margin:0 auto;
   display:block;
+  color: #ECF0F1;
+  font-family: 'PT Serif', sans-serif;
   background-color:#16a11d;
 }
 .create-download-button {
   margin-top: 15px;
+  color: #ECF0F1;
+  font-family: 'PT Serif', sans-serif;
   font-size: .9em;
   height: 30px;
   margin:0 auto;
@@ -132,7 +136,7 @@ button {
   font-size: 1.9em;
   margin-right: auto;
   margin-left: 10px;
-  font-family: 'Francois One';
+  font-family: 'PT Serif', sans-serif;
   color: #16a11d;
 }
 
@@ -148,7 +152,7 @@ button {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-family: 'Francois One';
+  font-family: 'PT Serif', sans-serif;
 }
 
 .nav-selected {
