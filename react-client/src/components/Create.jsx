@@ -21,15 +21,17 @@ class Create extends React.Component {
         }
 
     }
-    getId(){
-        var a=JSON.parse(localStorage.getItem('_id'))
-        console.log('id in create:', a)
-        this.setState({ _id: "60f1bd4819397546d4847579"})
-        console.log('id in create from state:',this.state._id)
-    }
+    // getId(){
+    //     var a=JSON.parse(localStorage.getItem('_id'))
+    //     console.log('id in create:', a)
+    //     this.setState({ _id: "60f1bd4819397546d4847579"})
+    //     console.log('id in create from state:',this.state._id)
+    // }
     componentDidMount() {
-        this.getId()
-        axios.post('/api/cv/create', { _id: "60f1bd4819397546d4847579"}).then(({ data }) => {
+        // this.getId()
+        this.setState({ _id: this.props.id})
+        console.log('id in create from state:',this.state._id)
+        axios.post('/api/cv/create', { _id: this.props.id}).then(({ data }) => {
              console.log('data in client in create=', data)
             this.setState({ jobtitle: data[0].jobtitle, name: data[0].name,
             email: data[0].email,
@@ -72,7 +74,8 @@ class Create extends React.Component {
         this.setState({ interests: e.target.value })
     }
     save() {
-        axios.put('/api/cv/save/60f1bd4819397546d4847579', { jobtitle: this.state.jobtitle , name: this.state.name,
+        console.log("client create save fct id=",this.props.id);
+        axios.put('/api/cv/save/'+this.props.id,{jobtitle: this.state.jobtitle , name: this.state.name,
             email: this.state.email,
             imageUrl: this.state.imageUrl,
             education: this.state.education,
@@ -106,13 +109,23 @@ class Create extends React.Component {
                 return true;
             }
         };
+        console.log('doc to pdf:',elementHTML);
         doc.fromHTML(elementHTML, 15, 15, {
             'width': 170,
             'elementHandlers': specialElementHandlers
         });
 
         // Save the PDF
-        doc.save('sample-document.pdf');
+        // doc.save('sample-document.pdf');
+        setTimeout(function () {
+            doc.save(`fileName`);
+        }, 0);  
+        // doc.fromHTML(elementHTML, 0, 0, {
+        //     'width': 100, // max width of content on PDF
+        //     'elementHandlers': specialElementHandlers
+        // },
+        // function(bla){doc.save('saveInCallback.pdf');},
+        // margin);
 
     }
 
@@ -123,7 +136,7 @@ class Create extends React.Component {
                 <h2>Write</h2>
                 <div>
 
-                    <input type="file" accept="image/*" onChange={this.preview_image.bind(this)} />
+                    <p><input type="file" accept="image/*" onChange={this.preview_image.bind(this)} /></p>
                     <label>Job title:</label>
                     <input className="create-input" type="text" placeholder={this.state.jobtitle} onChange={this.handleChangeTitle.bind(this)}></input>
                     <label>Name:</label>
@@ -143,9 +156,9 @@ class Create extends React.Component {
                     <button className="create-submit-button" type="submit" onClick={() => { this.save() }}>Save</button>
                 </div>
             </div>
-            <div className="create-preview " id="content">
+            <div className="create-preview " >
                 <h2>VIEW</h2>
-                <div>
+                <div id="content">
                     <img id="output_image" className="create-preview-image" />
                     <text className="view-input" type="text"  >{this.state.jobtitle}</text>
                     <text className="view-input" type="text"  >{this.state.name}</text>

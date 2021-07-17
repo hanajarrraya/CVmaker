@@ -39,6 +39,7 @@ class App extends React.Component {
     super();
     this.state = {
       view: 'login',
+      id:""
       
     }
 
@@ -51,16 +52,21 @@ class App extends React.Component {
       
     });
   }
-  
+  changeId(id) {
+    this.setState({
+      id:id,
+      
+    });
+  }
   renderView() {
     const { view } = this.state;
 
     if (view === 'logout' || view === 'login') {
-      return <Login changeView={this.changeView} />
+      return <Login changeView={this.changeView} changeId={this.changeId.bind(this)} />
     } else if (view === 'create') {
-      return <Create />
+      return <Create id={this.state.id} />
     }else if (view === 'signup') {
-      return <Signup changeView={this.changeView}/>
+      return <Signup changeView={this.changeView} changeId={this.changeId.bind(this)} />
     }
 
   }

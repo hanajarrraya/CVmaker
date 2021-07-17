@@ -22,6 +22,7 @@ class Login extends React.Component {
                 if(data.length===1){
                     console.log("id in login=",data[0]._id)
                     localStorage.setItem('_id', JSON.stringify(data[0]._id));
+                    this.props.changeId(data[0]._id)
                     this.props.changeView('create')
                 }
             
