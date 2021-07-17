@@ -2,7 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import $ from 'jquery';
 import axios from 'axios';
-// import {Cloudinary} from 'cloudinary-core';  
+import { Cloudinary } from 'cloudinary-core';
+var url = 'https://api.cloudinary.com/v1_1/drxdcalsl/upload'
+var preset = 'cf3bvkos'
 class Create extends React.Component {
     constructor(props) {
         super(props);
@@ -40,6 +42,8 @@ class Create extends React.Component {
                 languages: data[0].languages,
                 interests: data[0].interests
             })
+            var output = document.getElementById('output_image');
+            output.src = data[0].imageUrl;
             console.log('state in client in create=', this.state)
         })
 
@@ -102,19 +106,28 @@ class Create extends React.Component {
         reader.onload = function () {
             var output = document.getElementById('output_image');
             output.src = reader.result;
-            // var cl = new Cloudinary({ cloud_name:'drxdcalsl',
-            // api_key:'362872524578298',
-            // api_secret:'mgljyqjtecaiA914qcx2Zn4-2jc'});
-            // cl.v2.uploader.upload(output.src,(error,result)=>{
-            //     console.log("url in cloudinary",result.url)
-            // })
-            // tag = $.cloudinary.url( output.src);
-            tag = ouput.src;
+
         }
 
         reader.readAsDataURL(e.target.files[0]);
-        this.setState({ imageUrl: tag })
-        console.log("tag of imge:", tag);
+        var formData = new FormData()
+        var file = e.target.files[0]
+        formData.append('file', file)
+        formData.append('upload_preset', preset)
+        axios({
+            url: url,
+            method: 'post',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            data: formData
+        }).then((res) => {
+            console.log('answer for post request:', res.data.secure_url)
+            this.setState({ imageUrl: res.data.secure_url })
+            console.log("state imge:", this.state.imageUrl);
+        })
+            .catch((err) => {
+                console.error(err)
+            })
+
 
     }
     download() {
@@ -165,7 +178,7 @@ class Create extends React.Component {
                 var paragraphs = this.state.education.split('\n')
                 paragraphs.map((item, i) => splitted_paragraphs.push(<p key={i}>{item}</p>))
                 return splitted_paragraphs;
-            }else { return this.state.education }
+            } else { return this.state.education }
 
         } else return this.state.education
 
@@ -177,7 +190,7 @@ class Create extends React.Component {
                 var paragraphs = this.state.experience.split('\n')
                 paragraphs.map((item, i) => splitted_paragraphs.push(<p key={i}>{item}</p>))
                 return splitted_paragraphs;
-            }else { return this.state.experience }
+            } else { return this.state.experience }
         } else { return this.state.experience }
     }
 
